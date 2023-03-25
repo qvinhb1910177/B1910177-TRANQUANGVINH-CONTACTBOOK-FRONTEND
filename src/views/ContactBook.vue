@@ -8,11 +8,7 @@
                 Danh bạ
                 <i class="fas fa-address-book"></i>
             </h4>
-            <ContactList 
-                v-if="filteredContactsCount > 0" 
-                :contacts="filteredContacts"
-                v-model:activeIndex="activeIndex" 
-            />
+            <ContactList v-if="filteredContactsCount > 0" :contacts="filteredContacts" v-model:activeIndex="activeIndex" />
             <p v-else>Không có liên hệ nào.</p>
 
             <div class="mt-3 row justify-content-around align-items-center">
@@ -24,10 +20,7 @@
                     <i class="fas fa-plus"></i> Thêm mới
                 </button>
 
-                <button 
-                    class="btn btn-sm btn-danger" 
-                    @click="removeAllContacts"
-                >
+                <button class="btn btn-sm btn-danger" @click="removeAllContacts">
                     <i class="fas fa-trash"></i> Xóa tất cả
                 </button>
             </div>
@@ -39,25 +32,31 @@
                     <i class="fas fa-address-card"></i>
                 </h4>
                 <ContactCard :contact="activeContact" />
-                
+                <router-link :to="{
+                    name: 'contact.edit',
+                    params: { id: activeContact._id },
+                }">
+                    <span class="mt-2 badge badge-warning">
+                        <i class="fas fa-edit"></i> Hiệu chỉnh</span>
+                </router-link>
             </div>
         </div>
     </div>
 </template>
 
 
-    <script>
-    import ContactCard from "@/components/ContactCard.vue";
-    import InputSearch from "@/components/InputSearch.vue";
-    import ContactList from "@/components/ContactList.vue";
-    import ContactService from "@/services/contact.service";
-    export default {
-        components: {
-            ContactCard,
-            InputSearch,
-            ContactList,
+<script>
+import ContactCard from "@/components/ContactCard.vue";
+import InputSearch from "@/components/InputSearch.vue";
+import ContactList from "@/components/ContactList.vue";
+import ContactService from "@/services/contact.service";
+export default {
+    components: {
+        ContactCard,
+        InputSearch,
+        ContactList,
     },
-   
+
     // Đoạn mã xử lý đầy đủ sẽ trình bày bên dưới
     data() {
         return {
@@ -125,12 +124,12 @@
     mounted() {
         this.refreshList();
     },
-    
+
 };
-    </script>
-    <style scoped>
-    .page {
+</script>
+<style scoped>
+.page {
     text-align: left;
     max-width: 750px;
-    }
-    </style>
+}
+</style>
